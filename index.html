@@ -156,6 +156,39 @@
 
     .file-type-font { background: var(--accent-50); color: var(--accent-700); border: 1px solid var(--accent-200); }
 
+    .file-card-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .copy-link-btn {
+      width: 100%;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: background 140ms var(--ease), color 140ms var(--ease),
+        border-color 140ms var(--ease);
+    }
+
+    .copy-link-btn:hover {
+      background: var(--accent-soft);
+      color: var(--accent-800);
+      border-color: var(--accent-100);
+    }
+
+    .copy-link-btn.is-copied {
+      background: var(--success-50);
+      color: var(--success-700);
+      border-color: var(--success-100);
+    }
+
     body { transition: opacity 120ms; }
   </style>
 </head>
@@ -237,7 +270,7 @@
 
     let showHidden = false;
 
-    function renderFileBtn(file) {
+    function renderFileBtn(file, catId) {
       const label = getTypeLabel(file.type);
       const typeClass = `file-type-${file.type}`;
       const external = isExternal(file.href);
@@ -246,15 +279,25 @@
         : `href="${file.href}" download`;
       const hidden = file.visible === false;
 
+      const shareUrl = (file.id && catId)
+        ? `https://archive.magmalabs.dev/${catId}/${file.id}`
+        : null;
+      const copyBtn = shareUrl
+        ? `<button class="copy-link-btn" data-copy="${shareUrl}" type="button">Copy link</button>`
+        : '';
+
       return `
-        <a ${attrs} class="file-btn" data-name="${file.name.toLowerCase()}" data-type="${file.type}" data-visible="${!hidden}">
-          <span class="file-type-badge ${typeClass}">${label}</span>
-          <span class="file-btn-name">${file.name}</span>
-        </a>`;
+        <div class="file-card-wrap" data-name="${file.name.toLowerCase()}" data-type="${file.type}" data-visible="${!hidden}">
+          <a ${attrs} class="file-btn">
+            <span class="file-type-badge ${typeClass}">${label}</span>
+            <span class="file-btn-name">${file.name}</span>
+          </a>
+          ${copyBtn}
+        </div>`;
     }
 
     function renderCategory(cat) {
-      const buttons = cat.files.map(renderFileBtn).join('');
+      const buttons = cat.files.map(f => renderFileBtn(f, cat.id)).join('');
       const visibleCount = cat.files.filter(f => f.visible !== false).length;
       const hidden = cat.visible === false;
 
@@ -297,21 +340,22 @@
 
         const catTitle = cat.querySelector('.docs-category-title').textContent.toLowerCase();
         const catTitleMatch = q ? catTitle.includes(q) : false;
-        const buttons = cat.querySelectorAll('.file-btn');
+        const cards = cat.querySelectorAll('.file-card-wrap');
         let shownCount = 0;
 
-        buttons.forEach(btn => {
-          const btnIsHidden = btn.dataset.visible === 'false';
+        cards.forEach(card => {
+          const cardIsHidden = card.dataset.visible === 'false';
+          const fileBtn = card.querySelector('.file-btn');
 
-          if (btnIsHidden && !showHidden) {
-            btn.style.display = 'none';
-            btn.classList.remove('is-hidden-item');
+          if (cardIsHidden && !showHidden) {
+            card.style.display = 'none';
+            fileBtn.classList.remove('is-hidden-item');
             return;
           }
 
-          btn.classList.toggle('is-hidden-item', btnIsHidden);
-          const matches = !q || catTitleMatch || btn.dataset.name.includes(q) || btn.dataset.type.includes(q);
-          btn.style.display = matches ? '' : 'none';
+          fileBtn.classList.toggle('is-hidden-item', cardIsHidden);
+          const matches = !q || catTitleMatch || card.dataset.name.includes(q) || card.dataset.type.includes(q);
+          card.style.display = matches ? '' : 'none';
           if (matches) shownCount++;
         });
 
@@ -330,12 +374,17 @@
 
     document.getElementById('search').addEventListener('input', applyFilters);
 
-    document.getElementById('toggle-hidden').addEventListener('click', function () {
-      showHidden = !showHidden;
-      this.textContent = showHidden ? 'Hide hidden' : 'Show hidden';
-      this.classList.toggle('secondary', showHidden);
-      this.classList.toggle('ghost', !showHidden);
-      applyFilters();
+    document.getElementById('categories-container').addEventListener('click', function (e) {
+      const btn = e.target.closest('[data-copy]');
+      if (!btn) return;
+      navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy link';
+          btn.classList.remove('is-copied');
+        }, 2000);
+      });
     });
 
     const header = document.getElementById('site-header');
@@ -344,7 +393,13 @@
     }, { passive: true });
 
     function handleSlugRouting(data) {
-      const path = window.location.pathname.replace(/^\/|\/$/g, '');
+      // GitHub Pages 404.html encodes the path as ?p=; fall back to pathname for other hosts
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get('p');
+      const raw = encoded
+        ? decodeURIComponent(encoded)
+        : window.location.pathname;
+      const path = raw.replace(/^\/|\/$/g, '');
       if (!path) return false;
 
       const [catId, fileId, ...rest] = path.split('/');
