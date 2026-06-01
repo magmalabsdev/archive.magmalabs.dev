@@ -6,7 +6,7 @@
       "visible": true,
       "description": "Use to run your next hackathon",
       "files": [
-        { "name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"}
+        { "id": "ecp","name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"}
         
       ]
     },
@@ -16,9 +16,9 @@
       "visible": true,
       "description": "Cool and interesting fonts",
       "files": [
-        { "name": "Baba 9x24", "type": "font", "href": "files/Baba9x24-Regular.otf" },
-        { "name": "Baba 24x48", "type": "font", "href": "files/Baba24x48-Regular.otf" },
-        { "name": "Baba Mixed Case", "type": "font", "href": "files/BabaMixedCase-Regular.otf"}
+        { "id": "baba9x24", "name": "Baba 9x24", "type": "font", "href": "files/Baba9x24-Regular.otf" },
+        { "id": "baba24x48", "name": "Baba 24x48", "type": "font", "href": "files/Baba24x48-Regular.otf" },
+        { "id": "babamixed", "name": "Baba Mixed Case", "type": "font", "href": "files/BabaMixedCase-Regular.otf"}
         
       ]
     },

@@ -153,9 +153,13 @@
       font-size: 0.86em;
       font-weight: 600;
     }
+
+    .file-type-font { background: var(--accent-50); color: var(--accent-700); border: 1px solid var(--accent-200); }
+
+    body { transition: opacity 120ms; }
   </style>
 </head>
-<body>
+<body style="opacity:0">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" id="site-header">
@@ -186,7 +190,6 @@
                 spellcheck="false"
               />
             </div>
-            <button id="toggle-hidden" class="btn ghost small" type="button">Show hidden</button>
           </div>
         </div>
       </div>
@@ -221,6 +224,7 @@
       video: 'Video',
       audio: 'Audio',
       spreadsheet: 'Sheet',
+      font: 'Font',
     };
 
     function getTypeLabel(type) {
@@ -339,10 +343,33 @@
       header.classList.toggle('is-scrolled', window.scrollY > 0);
     }, { passive: true });
 
+    function handleSlugRouting(data) {
+      const path = window.location.pathname.replace(/^\/|\/$/g, '');
+      if (!path) return false;
+
+      const [catId, fileId, ...rest] = path.split('/');
+      if (!catId || !fileId || rest.length) return false;
+
+      const cat = data.categories.find(c => c.id === catId);
+      if (!cat) return false;
+
+      const file = cat.files.find(f => f.id === fileId);
+      if (!file) return false;
+
+      window.location.replace(file.href);
+      return true;
+    }
+
     fetch('files.json')
       .then(r => r.json())
-      .then(data => render(data))
+      .then(data => {
+        if (!handleSlugRouting(data)) {
+          document.body.style.opacity = '1';
+          render(data);
+        }
+      })
       .catch(() => {
+        document.body.style.opacity = '1';
         document.getElementById('categories-container').innerHTML =
           '<p style="color:var(--text-muted)">Could not load files.json.</p>';
       });
