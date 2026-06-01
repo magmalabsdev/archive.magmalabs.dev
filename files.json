@@ -1,0 +1,88 @@
+{
+  "categories": [
+      {
+      "id": "event-tools",
+      "name": "Event Tools",
+      "visible": true,
+      "description": "Use to run your next hackathon",
+      "files": [
+        { "name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"}
+        
+      ]
+    },
+    {
+      "id": "fonts",
+      "name": "Fonts",
+      "visible": true,
+      "description": "Cool and interesting fonts",
+      "files": [
+        { "name": "Baba 9x24", "type": "font", "href": "files/Baba9x24-Regular.otf" },
+        { "name": "Baba 24x48", "type": "font", "href": "files/Baba24x48-Regular.otf" },
+        { "name": "Baba Mixed Case", "type": "font", "href": "files/BabaMixedCase-Regular.otf"}
+        
+      ]
+    },
+    {
+      "id": "presentations",
+      "name": "Presentations",
+      "visible": false,
+      "description": "Slide decks and pitch materials",
+      "files": [
+        { "name": "Company Overview", "type": "pdf", "href": "files/company-overview.pdf" },
+        { "name": "Product Roadmap", "type": "pdf", "href": "files/product-roadmap.pdf" },
+        { "name": "Investor Deck", "type": "pdf", "href": "files/investor-deck.pdf", "visible": false },
+        { "name": "Team Intro Slides", "type": "pdf", "href": "files/team-intro.pdf" }
+      ]
+    },
+    {
+      "id": "guides",
+      "name": "Guides & Documentation",
+      "visible": false,
+      "description": "Manuals, how-tos, and technical references",
+      "files": [
+        { "name": "Getting Started Guide", "type": "pdf", "href": "files/getting-started.pdf" },
+        { "name": "API Reference", "type": "link", "href": "https://docs.example.com/api" },
+        { "name": "Setup Instructions", "type": "doc", "href": "files/setup-instructions.docx" },
+        { "name": "FAQ", "type": "doc", "href": "files/faq.docx" },
+        { "name": "Changelog", "type": "doc", "href": "files/changelog.md" }
+      ]
+    },
+    {
+      "id": "assets",
+      "name": "Brand Assets",
+      "visible": false,
+      "description": "Logos, icons, and visual brand materials",
+      "files": [
+        { "name": "Logo Pack", "type": "zip", "href": "files/logo-pack.zip" },
+        { "name": "Brand Guidelines", "type": "pdf", "href": "files/brand-guidelines.pdf" },
+        { "name": "Icon Set", "type": "zip", "href": "files/icon-set.zip" },
+        { "name": "Team Photo", "type": "image", "href": "files/team-photo.jpg" },
+        { "name": "Social Banners", "type": "zip", "href": "files/social-banners.zip" }
+      ]
+    },
+    {
+      "id": "media",
+      "name": "Media",
+      "visible": false,
+      "description": "Videos, recordings, and multimedia content",
+      "files": [
+        { "name": "Demo Video", "type": "video", "href": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+        { "name": "Tutorial Series", "type": "link", "href": "https://www.youtube.com/playlist?list=PL0" },
+        { "name": "Highlight Reel", "type": "video", "href": "files/highlights.mp4" },
+        { "name": "Podcast Episode 1", "type": "audio", "href": "files/podcast-ep1.mp3" }
+      ]
+    },
+    {
+      "id": "tools",
+      "name": "Tools & Templates",
+      "description": "Spreadsheets, templates, and utility files",
+      "visible": false,
+      "files": [
+        { "name": "Budget Template", "type": "spreadsheet", "href": "files/budget-template.xlsx" },
+        { "name": "Project Tracker", "type": "spreadsheet", "href": "files/project-tracker.xlsx" },
+        { "name": "Design Templates", "type": "zip", "href": "files/design-templates.zip" },
+        { "name": "Email Signatures", "type": "zip", "href": "files/email-signatures.zip" }
+      ]
+    }
+  ]
+}
