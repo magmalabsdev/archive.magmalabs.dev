@@ -6,7 +6,8 @@
       "visible": true,
       "description": "Use to run your next hackathon",
       "files": [
-        { "id": "ecp","name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"}
+        { "id": "ecp","name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"},
+        { "id": "ecp-docs","name": "ECP Documentation", "type": "pdf", "href": "files/ecp-manual.pdf"}
         
       ]
     },
