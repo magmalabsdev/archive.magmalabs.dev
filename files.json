@@ -12,6 +12,17 @@
       ]
     },
     {
+      "id": "creative-tools",
+      "name": "Creative tools",
+      "visible": true,
+      "description": "Tools for your next creative project",
+      "files": [
+        { "id": "remove-bg", "name": "Image background remover", "type": "link", "href": "https://www.remove.bg/" },
+        { "id": "ytmp3", "name": "Youtube MP3 downloader", "type": "link", "href": "https://v5.y2mate.nu/" }
+        
+      ]
+    },
+    {
       "id": "fonts",
       "name": "Fonts",
       "visible": true,
