@@ -6,9 +6,9 @@
       "visible": true,
       "description": "Use to run your next hackathon",
       "files": [
-        { "id": "ecp","name": "Event Control Panel", "type": "link", "href": "https://ecp.magmalabs.dev/"},
+        { "id": "ecp","name": "Event Control Panel (web)", "type": "link", "href": "https://ecp.magmalabs.dev/"},
+        { "id": "ecp","name": "Event Control Panel (app)", "type": "link", "href": "https://magmalabs.dev/ecp"},
         { "id": "ecp-docs","name": "ECP Documentation", "type": "pdf", "href": "files/ecp-manual.pdf"}
-        
       ]
     },
     {
@@ -19,7 +19,6 @@
       "files": [
         { "id": "remove-bg", "name": "Image background remover", "type": "link", "href": "https://www.remove.bg/" },
         { "id": "ytmp3", "name": "Youtube MP3 downloader", "type": "link", "href": "https://v5.y2mate.nu/" }
-        
       ]
     },
     {
@@ -27,11 +26,17 @@
       "name": "Fonts",
       "visible": true,
       "description": "Cool and interesting fonts",
-      "files": [
-        { "id": "baba9x24", "name": "Baba 9x24", "type": "font", "href": "files/Baba9x24-Regular.otf" },
-        { "id": "baba24x48", "name": "Baba 24x48", "type": "font", "href": "files/Baba24x48-Regular.otf" },
-        { "id": "babamixed", "name": "Baba Mixed Case", "type": "font", "href": "files/BabaMixedCase-Regular.otf"}
-        
+      "subcategories": [
+        {
+          "id": "baba",
+          "name": "Baba",
+          "description": "Pixelated Baba fonts in multiple sizes",
+          "files": [
+            { "id": "baba9x24", "name": "Baba 9x24", "type": "font", "href": "files/Baba9x24-Regular.otf", "license": "SIL Open Font License" },
+            { "id": "baba24x48", "name": "Baba 24x48", "type": "font", "href": "files/Baba24x48-Regular.otf", "license": "SIL Open Font License" },
+            { "id": "babamixed", "name": "Baba Mixed Case", "type": "font", "href": "files/BabaMixedCase-Regular.otf", "license": "SIL Open Font License" }
+          ]
+        }
       ]
     },
     {
