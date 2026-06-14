@@ -1,0 +1,33 @@
+{
+  "header": {
+    "brand": {
+      "href": "/",
+      "ariaLabel": "Archive — Magma Labs",
+      "logo": { "src": "/site-data/logo.svg", "alt": "Magma Labs logo", "width": 34, "height": 34 },
+      "text": "Magma Labs"
+    },
+    "links": [
+      { "label": "Files", "href": "/" },
+      { "label": "Magma Labs", "href": "https://magmalabs.dev/" }
+    ]
+  },
+  "footer": {
+    "brand": {
+      "href": "/",
+      "ariaLabel": "Archive — Magma Labs",
+      "logo": { "src": "/site-data/logo.svg", "alt": "", "width": 34, "height": 34 },
+      "text": "Magma Labs"
+    },
+    "columns": [
+      { "title": "Archive", "links": [
+        { "label": "Files & Resources", "href": "/" }
+      ]},
+      { "title": "Magma Labs", "links": [
+        { "label": "Home", "href": "https://magmalabs.dev/" },
+        { "label": "Projects", "href": "https://magmalabs.dev/products/" },
+        { "label": "Events", "href": "https://events.magmalabs.dev/" }
+      ]}
+    ],
+    "fineprint": "© {year} Magma Labs. All rights reserved."
+  }
+}

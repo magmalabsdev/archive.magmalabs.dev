@@ -1,5 +1,11 @@
 {
   "permissions": {
+        "deny": [
+      "Bash(git push*)",
+      "Bash(git commit*)",
+      "Bash(git merge*)",
+      "Bash(git rebase*)"
+    ],
     "allow": [
       "Bash(node -e ' *)"
     ]

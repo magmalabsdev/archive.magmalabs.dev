@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
   <title>Files &amp; Resources - Magma Labs</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="/site-data/logo.svg" />
+  <link rel="stylesheet" href="/site-data/styles.css" />
   <style>
     .file-grid {
       display: grid;
@@ -308,16 +309,7 @@
 <body style="opacity:0">
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="site-header">
-    <div class="container">
-      <div class="header-inner">
-        <a class="brand" href="/">
-          <img src="logo.svg" alt="Magma Labs" width="34" height="34" />
-          <span>Magma Labs</span>
-        </a>
-      </div>
-    </div>
-  </header>
+  <header class="site-header" data-header data-site-header></header>
 
   <main class="main" id="main">
     <div class="page-hero">
@@ -353,14 +345,12 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <span class="fineprint">&copy; 2025 Magma Labs. All rights reserved.</span>
-      </div>
-    </div>
-  </footer>
+  <footer class="site-footer" data-site-footer></footer>
 
+  <div class="toast" data-toast role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script>window.MAGMA_SITE_JSON_URL = '/archive-site.json';</script>
+  <script src="/site-data/core.js" defer></script>
   <script>
     const TYPE_LABELS = {
       pdf: 'PDF', doc: 'DOC', link: 'Link', zip: 'ZIP',
@@ -625,8 +615,11 @@
     document.addEventListener('click', function (e) {
       const btn = e.target.closest('[data-copy]');
       if (!btn) return;
-      // Stop the click from toggling a parent <details> when button is inside <summary>
+      // Stop the click from toggling a parent <details> when button is inside
+      // <summary>, and stop core.js's global [data-copy] handler from also
+      // firing (it would show a redundant toast on top of our inline feedback).
       e.stopPropagation();
+      e.stopImmediatePropagation();
       navigator.clipboard.writeText(btn.dataset.copy).then(() => {
         btn.textContent = 'Copied!';
         btn.classList.add('is-copied');
@@ -636,11 +629,6 @@
         }, 2000);
       });
     });
-
-    const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('is-scrolled', window.scrollY > 0);
-    }, { passive: true });
 
     // --- Boot ---
 
