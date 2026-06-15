@@ -6,10 +6,7 @@
       "logo": { "src": "/site-data/logo.svg", "alt": "Magma Labs logo", "width": 34, "height": 34 },
       "text": "Magma Labs"
     },
-    "links": [
-      { "label": "Files", "href": "/" },
-      { "label": "Magma Labs", "href": "https://magmalabs.dev/" }
-    ]
+    "links": []
   },
   "footer": {
     "brand": {
