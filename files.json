@@ -1,5 +1,14 @@
 {
   "categories": [
+          {
+      "id": "workshops",
+      "name": "Workshops",
+      "visible": true,
+      "description": "Start building quickly",
+      "files": [
+        { "id": "opportunities","name": "STEM opportunities", "type": "pdf", "href": "files/stem-opportunities.pdf"}
+      ]
+    },
       {
       "id": "event-tools",
       "name": "Event Tools",
