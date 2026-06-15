@@ -8,82 +8,18 @@
   <link rel="icon" type="image/svg+xml" href="/site-data/logo.svg" />
   <link rel="stylesheet" href="/site-data/styles.css" />
   <style>
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-      gap: 10px;
-    }
+    body { transition: opacity 120ms; }
+    .is-hidden { display: none !important; }
 
-    .file-btn {
+    /* --- Hero search --- */
+    .hero-search {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 14px 16px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--accent-100);
-      background: linear-gradient(180deg, rgba(244, 241, 253, 0.7), rgba(255, 255, 255, 0.96));
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 140ms var(--ease), border-color 140ms var(--ease),
-        box-shadow 140ms var(--ease), background 140ms var(--ease);
-      box-shadow: var(--shadow-sm);
+      justify-content: center;
+      margin-top: 20px;
     }
+    .hero-search .search-wrap { width: min(440px, 100%); }
 
-    .file-btn:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent-300);
-      box-shadow: var(--shadow-md);
-      background: linear-gradient(180deg, rgba(244, 241, 253, 0.95), rgba(255, 255, 255, 0.98));
-    }
-
-    .file-btn:focus-visible {
-      outline: 3px solid var(--accent-200);
-      outline-offset: 2px;
-    }
-
-    .file-btn-name {
-      font-weight: 780;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      line-height: 1.3;
-      word-break: break-word;
-    }
-
-    .file-btn-license {
-      font-size: 0.72rem;
-      font-weight: 650;
-      color: var(--text-muted);
-      margin-top: auto;
-      padding-top: 2px;
-    }
-
-    .file-type-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 850;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .file-type-pdf    { background: var(--danger-50);   color: var(--danger-700);   border: 1px solid var(--danger-100); }
-    .file-type-doc    { background: var(--info-50);     color: var(--info-700);     border: 1px solid var(--info-100); }
-    .file-type-link   { background: var(--accent-50);   color: var(--accent-700);   border: 1px solid var(--accent-100); }
-    .file-type-zip    { background: var(--bg-muted);    color: var(--text-muted);   border: 1px solid var(--border); }
-    .file-type-image  { background: var(--warning-50);  color: var(--warning-700);  border: 1px solid var(--warning-100); }
-    .file-type-video  { background: var(--warning-50);  color: var(--warning-700);  border: 1px solid var(--warning-100); }
-    .file-type-audio  { background: var(--success-50);  color: var(--success-700);  border: 1px solid var(--success-100); }
-    .file-type-spreadsheet { background: var(--success-50); color: var(--success-700); border: 1px solid var(--success-100); }
-    .file-type-font   { background: var(--accent-50);   color: var(--accent-700);   border: 1px solid var(--accent-200); }
-
-    .search-wrap {
-      position: relative;
-    }
-
+    .search-wrap { position: relative; }
     .search-wrap::before {
       content: "";
       position: absolute;
@@ -98,15 +34,235 @@
       mask-size: contain;
       pointer-events: none;
     }
+    .search-wrap .input { padding-left: 40px; }
 
-    .search-wrap .input {
-      padding-left: 40px;
+    /* --- Sticky category pill bar --- */
+    .category-tabs {
+      position: sticky;
+      top: var(--header-h, 56px);
+      z-index: 20;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+
+    .category-tab {
+      flex: 0 0 auto;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 740;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 140ms var(--ease), color 140ms var(--ease),
+        border-color 140ms var(--ease);
+    }
+    .category-tab:hover { border-color: var(--accent-300); }
+    .category-tab:focus-visible { outline: 3px solid var(--accent-200); outline-offset: 2px; }
+    .category-tab.is-active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
     }
 
-    .categories-container {
+    /* --- Stacked, divided sections --- */
+    .cat-section {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+    }
+    .cat-section:first-child { border-top: none; padding-top: 28px; }
+    .cat-section-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 22px;
+    }
+    .cat-section-title {
+      font-size: 1.5rem;
+      font-weight: 820;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .cat-section-desc {
+      color: var(--text-muted);
+      margin: 6px 0 0;
+    }
+
+    /* --- Carousel (2 rows, horizontal scroll) --- */
+    .carousel { position: relative; }
+    .carousel-track {
+      --card-w: 220px;
       display: grid;
-      gap: 14px;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(2, auto);
+      grid-auto-columns: var(--card-w);
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scroll-behavior: smooth;
+      padding: 4px 2px;
+      scrollbar-width: none;
     }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-track > .media-card-wrap { scroll-snap-align: start; }
+
+    .carousel-arrow {
+      position: absolute;
+      top: calc(50% - 10px);
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      transition: opacity 140ms var(--ease), background 140ms var(--ease);
+    }
+    .carousel-arrow svg { width: 20px; height: 20px; }
+    .carousel-arrow.prev { left: 4px; }
+    .carousel-arrow.next { right: 4px; }
+    .carousel-arrow:hover { background: var(--accent-soft); }
+    .carousel-arrow[disabled] { opacity: 0.35; cursor: default; pointer-events: none; }
+    .carousel-arrow[hidden] { display: none; }
+
+    .carousel-progress {
+      width: 160px;
+      height: 4px;
+      margin: 14px auto 0;
+      border-radius: 999px;
+      background: var(--bg-muted);
+      overflow: hidden;
+    }
+    .carousel-progress[hidden] { display: none; }
+    .carousel-progress-thumb {
+      height: 100%;
+      width: 30%;
+      border-radius: 999px;
+      background: var(--accent-300);
+    }
+
+    /* --- Media card (image button) --- */
+    .media-card-wrap { position: relative; }
+
+    .media-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #fff;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition: transform 140ms var(--ease), border-color 140ms var(--ease),
+        box-shadow 140ms var(--ease);
+    }
+    .media-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-300);
+      box-shadow: var(--shadow-md);
+    }
+    .media-card:focus-visible { outline: 3px solid var(--accent-200); outline-offset: 2px; }
+    .media-card.is-hidden-item { opacity: 0.5; border-style: dashed; }
+
+    .media-card-thumb {
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      background: color-mix(in srgb, currentColor 12%, #fff);
+      overflow: hidden;
+    }
+    .media-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .media-card-thumb svg { width: 34%; height: 34%; opacity: 0.9; }
+
+    .media-card-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 11px 12px;
+    }
+    .media-card-chip {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      background: color-mix(in srgb, currentColor 16%, transparent);
+    }
+    .media-card-chip svg { width: 16px; height: 16px; }
+    .media-card-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .media-card-name {
+      font-weight: 780;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .media-card-sub { font-size: 0.78rem; font-weight: 650; color: var(--text-muted); }
+
+    /* Type accents (glyph color; thumb/chip backgrounds derive via color-mix) */
+    .type-pdf  { color: var(--danger-700); }
+    .type-doc  { color: var(--info-700); }
+    .type-link { color: var(--accent-700); }
+    .type-zip  { color: var(--text-muted); }
+    .type-image, .type-video { color: var(--warning-700); }
+    .type-audio, .type-spreadsheet { color: var(--success-700); }
+    .type-font { color: var(--accent-700); }
+
+    /* Copy-link button — hover-revealed, top-right of card */
+    .card-copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 3;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 140ms var(--ease), background 140ms var(--ease),
+        color 140ms var(--ease);
+    }
+    .card-copy svg { width: 16px; height: 16px; }
+    .media-card-wrap:hover .card-copy,
+    .card-copy:focus-visible { opacity: 1; }
+    .card-copy:hover { color: var(--accent-800); background: #fff; }
+    .card-copy.is-copied { color: var(--success-700); border-color: var(--success-100); opacity: 1; }
 
     .no-results {
       padding: 48px 18px;
@@ -116,194 +272,7 @@
       border: 1px dashed rgba(182, 165, 238, 0.6);
       background: linear-gradient(180deg, rgba(244, 241, 253, 0.4), rgba(255, 255, 255, 0.8));
     }
-
-    .no-results p {
-      margin: 6px 0 0;
-      font-size: 0.95rem;
-    }
-
-    .toolbar-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .toolbar-row .search-wrap {
-      flex: 1;
-    }
-
-    .file-btn.is-hidden-item {
-      opacity: 0.45;
-      border-style: dashed;
-    }
-
-    .file-btn.is-hidden-item:hover {
-      opacity: 0.75;
-    }
-
-    .docs-category.is-hidden-item {
-      opacity: 0.6;
-    }
-
-    .docs-category.is-hidden-item > summary .docs-category-title::after {
-      content: " — hidden";
-      color: var(--text-muted);
-      font-size: 0.86em;
-      font-weight: 600;
-    }
-
-    .file-card-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .copy-link-btn {
-      width: 100%;
-      padding: 7px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      font: inherit;
-      font-size: 0.78rem;
-      font-weight: 700;
-      transition: background 140ms var(--ease), color 140ms var(--ease),
-        border-color 140ms var(--ease);
-    }
-
-    .copy-link-btn:hover {
-      background: var(--accent-soft);
-      color: var(--accent-800);
-      border-color: var(--accent-100);
-    }
-
-    .copy-link-btn.is-copied {
-      background: var(--success-50);
-      color: var(--success-700);
-      border-color: var(--success-100);
-    }
-
-    /* Subcategory copy button lives inside a summary — compact & non-growing */
-    .subcategory-copy-btn {
-      width: auto;
-      flex-shrink: 0;
-      align-self: center;
-      padding: 5px 10px;
-      font-size: 0.74rem;
-    }
-
-    /* Nested subcategory <details> */
-    .subcategory-list {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .subcategory-list + .file-grid {
-      margin-top: 6px;
-    }
-
-    .docs-subcategory {
-      box-shadow: none;
-    }
-
-    .docs-subcategory[open] {
-      box-shadow: var(--shadow-sm);
-    }
-
-    .docs-subcategory > summary .docs-category-title {
-      font-size: 0.98rem;
-    }
-
-    /* Subcategory rows on subpages */
-    .subcategory-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--accent-100);
-      background: linear-gradient(180deg, rgba(244, 241, 253, 0.55), rgba(255, 255, 255, 0.92));
-      text-decoration: none;
-      color: inherit;
-      transition: transform 140ms var(--ease), border-color 140ms var(--ease),
-        box-shadow 140ms var(--ease), background 140ms var(--ease);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .subcategory-row:hover {
-      transform: translateY(-1px);
-      border-color: var(--accent-300);
-      box-shadow: var(--shadow-md);
-      background: linear-gradient(180deg, rgba(244, 241, 253, 0.9), rgba(255, 255, 255, 0.98));
-    }
-
-    .subcategory-row:focus-visible {
-      outline: 3px solid var(--accent-200);
-      outline-offset: 2px;
-    }
-
-    .subcategory-row-info {
-      display: grid;
-      gap: 2px;
-    }
-
-    .subcategory-row-name {
-      font-weight: 780;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .subcategory-row-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .subcategory-row-arrow {
-      color: var(--accent-300);
-      font-size: 1.3rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 10px;
-      font-size: 0.88rem;
-      font-weight: 650;
-      color: var(--text-muted);
-    }
-
-    .breadcrumb-link {
-      color: var(--accent-600);
-      text-decoration: none;
-      transition: color 140ms var(--ease);
-    }
-
-    .breadcrumb-link:hover { color: var(--accent-400); }
-
-    .breadcrumb-link:focus-visible {
-      outline: 3px solid var(--accent-200);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-
-    .breadcrumb-sep {
-      color: var(--text-muted);
-      opacity: 0.45;
-      padding: 0 1px;
-    }
-
-    .breadcrumb-current { color: var(--text-muted); }
-
-    body { transition: opacity 120ms; }
+    .no-results p { margin: 6px 0 0; font-size: 0.95rem; }
   </style>
 </head>
 <body style="opacity:0">
@@ -314,29 +283,28 @@
   <main class="main" id="main">
     <div class="page-hero">
       <div class="container">
-        <div id="page-breadcrumb"></div>
         <h1 id="page-title">Files &amp; <span class="accent">Resources</span></h1>
         <p id="page-lead" class="lead">Browse and download shared files, documents, and assets.</p>
-        <div id="page-toolbar" class="toolbar" style="margin-top: 20px;">
-          <div class="toolbar-row">
-            <div class="search-wrap">
-              <input
-                class="input"
-                type="search"
-                id="search"
-                placeholder="Search files and categories…"
-                autocomplete="off"
-                spellcheck="false"
-              />
-            </div>
+        <div class="hero-search">
+          <div class="search-wrap">
+            <input
+              class="input"
+              type="search"
+              id="search"
+              placeholder="Search this category…"
+              autocomplete="off"
+              spellcheck="false"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <section class="section" style="padding-top: 12px;">
+    <nav id="category-tabs" class="category-tabs" aria-label="Categories"></nav>
+
+    <section class="section" style="padding-top: 0;">
       <div class="container">
-        <div id="categories-container" class="categories-container"></div>
+        <div id="sections"></div>
         <div id="no-results" class="no-results is-hidden">
           <strong>No results found</strong>
           <p>Try a different search term.</p>
@@ -357,18 +325,37 @@
       image: 'Image', video: 'Video', audio: 'Audio',
       spreadsheet: 'Sheet', font: 'Font',
     };
+    const getTypeLabel = (type) => TYPE_LABELS[type] || String(type || '').toUpperCase();
+    const isExternal = (href) => /^https?:\/\//i.test(href);
 
-    function getTypeLabel(type) {
-      return TYPE_LABELS[type] || type.toUpperCase();
+    // --- Inline SVG icons (decorative; thumbnails fall back to these) ---
+    const DOC_PATHS = '<path d="M14 3v5h5"/><path d="M7 3h7l5 5v11a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 13h6M9 17h4"/>';
+    const TYPE_ICONS = {
+      pdf: DOC_PATHS,
+      doc: DOC_PATHS,
+      link: '<path d="M10 13a5 5 0 0 0 7.07 0l2-2A5 5 0 0 0 12 4l-1 1"/><path d="M14 11a5 5 0 0 0-7.07 0l-2 2A5 5 0 0 0 12 20l1-1"/>',
+      zip: '<path d="M12 3v18"/><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5"/>',
+      image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
+      video: '<rect x="3" y="5" width="13" height="14" rx="2"/><path d="M21 8l-5 4 5 4z"/>',
+      audio: '<path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/>',
+      spreadsheet: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+      font: '<path d="M5 20l5.5-15h3L21.5 20"/><path d="M8.5 14h7"/>',
+    };
+    function iconFor(type) {
+      const paths = TYPE_ICONS[type] || DOC_PATHS;
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
     }
-
-    function isExternal(href) {
-      return /^https?:\/\//i.test(href);
-    }
+    const ARROW_LEFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+    const ARROW_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+    const COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
+    const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
 
     let showHidden = false;
+    let carouselUpdaters = [];
+    let visibleCategories = [];
+    let activeCatId = null;
 
-    // --- Route resolution ---
+    // --- Route resolution (preserves deep-link share URLs) ---
 
     function getPathSegments() {
       const params = new URLSearchParams(window.location.search);
@@ -406,261 +393,241 @@
       return null;
     }
 
-    // --- Rendering helpers ---
+    // --- Rendering ---
 
-    function renderFileBtn(file, catPath) {
-      const label = getTypeLabel(file.type);
-      const typeClass = `file-type-${file.type}`;
+    function renderMediaCard(file, path) {
+      const hidden = file.visible === false;
       const external = isExternal(file.href);
       const attrs = external
         ? `href="${file.href}" target="_blank" rel="noopener noreferrer"`
         : `href="${file.href}" download`;
-      const hidden = file.visible === false;
 
-      const shareUrl = (file.id && catPath)
-        ? `https://archive.magmalabs.dev/${catPath}/${file.id}`
+      const thumb = file.image
+        ? `<img src="${file.image}" alt="" loading="lazy" />`
+        : iconFor(file.type);
+
+      const sub = file.license || getTypeLabel(file.type);
+
+      const shareUrl = (file.id && path)
+        ? `https://archive.magmalabs.dev/${path}/${file.id}`
         : null;
       const copyBtn = shareUrl
-        ? `<button class="copy-link-btn" data-copy="${shareUrl}" type="button">Copy link</button>`
-        : '';
-
-      const licenseHtml = file.license
-        ? `<span class="file-btn-license">${file.license}</span>`
+        ? `<button class="card-copy" data-copy="${shareUrl}" type="button" aria-label="Copy link" title="Copy link">${COPY_ICON}</button>`
         : '';
 
       return `
-        <div class="file-card-wrap" data-name="${file.name.toLowerCase()}" data-type="${file.type}" data-visible="${!hidden}">
-          <a ${attrs} class="file-btn${hidden ? ' is-hidden-item' : ''}">
-            <span class="file-type-badge ${typeClass}">${label}</span>
-            <span class="file-btn-name">${file.name}</span>
-            ${licenseHtml}
+        <div class="media-card-wrap" data-name="${file.name.toLowerCase()}" data-type="${file.type}" data-visible="${!hidden}">
+          <a class="media-card${hidden ? ' is-hidden-item' : ''}" ${attrs}>
+            <div class="media-card-thumb type-${file.type}">${thumb}</div>
+            <div class="media-card-body">
+              <span class="media-card-chip type-${file.type}">${iconFor(file.type)}</span>
+              <span class="media-card-text">
+                <span class="media-card-name">${file.name}</span>
+                <span class="media-card-sub">${sub}</span>
+              </span>
+            </div>
           </a>
           ${copyBtn}
         </div>`;
     }
 
-    // Renders a subcategory as a collapsible <details> with a copy-link button
-    // (used on the home page / main view, recursively)
-    function renderSubcategoryDropdown(subcat, catPath) {
-      const subPath = catPath + '/' + subcat.id;
-      const hidden = subcat.visible === false;
-      if (hidden && !showHidden) return '';
-
-      const shareUrl = `https://archive.magmalabs.dev/${subPath}`;
-      const body = renderContents(subcat, subPath, 'dropdown');
-
+    function renderSection(section) {
+      const cards = section.files.map(f => renderMediaCard(f, section.path)).join('');
       return `
-        <details class="card docs-category docs-subcategory${hidden ? ' is-hidden-item' : ''}" open data-visible="${!hidden}">
-          <summary>
-            <div class="docs-category-heading">
-              <div class="docs-category-title">${subcat.name}</div>
-              ${subcat.description ? `<div class="docs-category-meta">${subcat.description}</div>` : ''}
-            </div>
-            <button class="copy-link-btn subcategory-copy-btn" data-copy="${shareUrl}" type="button">Copy link</button>
-          </summary>
-          <div class="docs-category-body">
-            ${body}
+        <div class="cat-section">
+          <div class="cat-section-head">
+            <h2 class="cat-section-title">${section.title}</h2>
+            ${section.description ? `<p class="cat-section-desc">${section.description}</p>` : ''}
           </div>
-        </details>`;
-    }
-
-    // Renders a subcategory as a navigable row (used on subpages)
-    function renderSubcategoryRow(subcat, currentPath) {
-      if (subcat.visible === false && !showHidden) return '';
-      const href = '/' + currentPath + '/' + subcat.id;
-      const hidden = subcat.visible === false;
-      return `
-        <a href="${href}" class="subcategory-row${hidden ? ' is-hidden-item' : ''}">
-          <div class="subcategory-row-info">
-            <span class="subcategory-row-name">${subcat.name}</span>
-            ${subcat.description ? `<span class="subcategory-row-desc">${subcat.description}</span>` : ''}
+          <div class="carousel">
+            <button class="carousel-arrow prev" type="button" aria-label="Scroll left" hidden>${ARROW_LEFT}</button>
+            <div class="carousel-track">${cards}</div>
+            <button class="carousel-arrow next" type="button" aria-label="Scroll right" hidden>${ARROW_RIGHT}</button>
+            <div class="carousel-progress" hidden><div class="carousel-progress-thumb"></div></div>
           </div>
-          <span class="subcategory-row-arrow">›</span>
-        </a>`;
+        </div>`;
     }
 
-    // mode: 'dropdown' = subcats as collapsible details; 'rows' = subcats as nav rows
-    function renderContents(node, catPath, mode) {
-      const subcats = node.subcategories || [];
-      const files = (node.files || []).filter(f => f.visible !== false || showHidden);
-
-      const subcatHtml = subcats
-        .map(s => mode === 'dropdown'
-          ? renderSubcategoryDropdown(s, catPath)
-          : renderSubcategoryRow(s, catPath))
-        .join('');
-
-      const filesHtml = files.map(f => renderFileBtn(f, catPath)).join('');
-
-      return `
-        ${subcatHtml ? `<div class="subcategory-list">${subcatHtml}</div>` : ''}
-        ${filesHtml ? `<div class="file-grid">${filesHtml}</div>` : ''}
-      `;
+    // Flatten a top-level category into ordered, divided sections:
+    // direct files become a leading section; each subcategory (recursively)
+    // becomes its own section.
+    function flattenSections(category) {
+      const sections = [];
+      const direct = (category.files || []).filter(f => f.visible !== false || showHidden);
+      if (direct.length) {
+        sections.push({ title: category.name, description: category.description, files: direct, path: category.id });
+      }
+      const collect = (node, parentPath) => {
+        if (node.visible === false && !showHidden) return;
+        const path = parentPath + '/' + node.id;
+        const files = (node.files || []).filter(f => f.visible !== false || showHidden);
+        if (files.length) sections.push({ title: node.name, description: node.description, files, path });
+        (node.subcategories || []).forEach(s => collect(s, path));
+      };
+      (category.subcategories || []).forEach(s => collect(s, category.id));
+      return sections;
     }
 
-    function renderCategory(cat) {
-      const hidden = cat.visible === false;
-      return `
-        <details class="card docs-category" open data-category-id="${cat.id}" data-visible="${!hidden}">
-          <summary>
-            <div class="docs-category-heading">
-              <div class="docs-category-title">${cat.name}</div>
-              <div class="docs-category-meta">${cat.description || ''}</div>
-            </div>
-          </summary>
-          <div class="docs-category-body">
-            ${renderContents(cat, cat.id, 'dropdown')}
-          </div>
-        </details>`;
-    }
+    function initCarousel(carousel) {
+      const track = carousel.querySelector('.carousel-track');
+      const prev = carousel.querySelector('.carousel-arrow.prev');
+      const next = carousel.querySelector('.carousel-arrow.next');
+      const progress = carousel.querySelector('.carousel-progress');
+      const thumb = carousel.querySelector('.carousel-progress-thumb');
 
-    function renderBreadcrumb(breadcrumb) {
-      const parts = [`<a href="/" class="breadcrumb-link">Home</a>`];
-      breadcrumb.forEach(({ node, path }, i) => {
-        parts.push(`<span class="breadcrumb-sep">›</span>`);
-        if (i < breadcrumb.length - 1) {
-          parts.push(`<a href="/${path}" class="breadcrumb-link">${node.name}</a>`);
-        } else {
-          parts.push(`<span class="breadcrumb-current">${node.name}</span>`);
-        }
-      });
-      return `<nav class="breadcrumb" aria-label="Breadcrumb">${parts.join('')}</nav>`;
-    }
+      function update() {
+        // Use 2 rows only when the items overflow a single visible row; a single
+        // full row otherwise (so small sets don't stretch into a half-empty 2nd row).
+        const cs = getComputedStyle(track);
+        const cardW = parseFloat(cs.getPropertyValue('--card-w')) || 220;
+        const gap = parseFloat(cs.columnGap || cs.gap) || 16;
+        const visibleCols = Math.max(1, Math.floor((track.clientWidth + gap) / (cardW + gap)));
+        const count = Array.from(track.children).filter(c => c.style.display !== 'none').length;
+        track.style.gridTemplateRows = `repeat(${count > visibleCols ? 2 : 1}, auto)`;
 
-    // --- Page rendering ---
-
-    function renderHomePage(data) {
-      document.getElementById('categories-container').innerHTML =
-        data.categories.map(renderCategory).join('');
-      applyFilters();
-    }
-
-    function renderSubpage(node, breadcrumb) {
-      const catPath = breadcrumb[breadcrumb.length - 1].path;
-
-      document.title = `${node.name} — Magma Labs`;
-      document.getElementById('page-breadcrumb').innerHTML = renderBreadcrumb(breadcrumb);
-      document.getElementById('page-title').textContent = node.name;
-
-      const lead = document.getElementById('page-lead');
-      if (node.description) {
-        lead.textContent = node.description;
-      } else {
-        lead.remove();
+        const overflow = track.scrollWidth - track.clientWidth;
+        const hasOverflow = overflow > 2;
+        prev.hidden = next.hidden = progress.hidden = !hasOverflow;
+        if (!hasOverflow) return;
+        const x = track.scrollLeft;
+        prev.disabled = x <= 4;
+        next.disabled = x >= overflow - 4;
+        const ratio = track.clientWidth / track.scrollWidth;
+        thumb.style.width = (ratio * 100) + '%';
+        thumb.style.marginLeft = ((x / overflow) * (100 - ratio * 100)) + '%';
       }
 
-      document.getElementById('page-toolbar').remove();
+      prev.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth * 0.9, behavior: 'smooth' }));
+      next.addEventListener('click', () => track.scrollBy({ left: track.clientWidth * 0.9, behavior: 'smooth' }));
+      track.addEventListener('scroll', update, { passive: true });
+      track.querySelectorAll('img').forEach(img => img.addEventListener('load', update));
 
-      document.getElementById('categories-container').innerHTML =
-        renderContents(node, catPath, 'rows');
-
-      document.getElementById('no-results').classList.add('is-hidden');
+      carouselUpdaters.push(update);
+      update();
+      requestAnimationFrame(update);
     }
 
-    // --- Search filter (home page only) ---
+    // cat = null shows every category (the default / "all" view).
+    function selectCategory(cat) {
+      activeCatId = cat ? cat.id : null;
+      document.querySelectorAll('.category-tab').forEach(t =>
+        t.classList.toggle('is-active', !!cat && t.dataset.id === cat.id));
 
-    function applyFilters() {
-      const q = document.getElementById('search')?.value.trim().toLowerCase() || '';
-      // Only select top-level category elements (not nested subcategories)
-      const categories = document.querySelectorAll('#categories-container > .docs-category');
-      let anyVisible = false;
+      carouselUpdaters = [];
+      const host = document.getElementById('sections');
+      const sections = cat ? flattenSections(cat) : visibleCategories.flatMap(flattenSections);
+      host.innerHTML = sections.length
+        ? sections.map(renderSection).join('')
+        : '<p style="color:var(--text-muted);text-align:center;padding:48px 0">Nothing here yet.</p>';
+      host.querySelectorAll('.carousel').forEach(initCarousel);
 
-      categories.forEach(cat => {
-        const catIsHidden = cat.dataset.visible === 'false';
+      const search = document.getElementById('search');
+      if (search) search.value = '';
+      applySearch();
+    }
 
-        if (catIsHidden && !showHidden) {
-          cat.style.display = 'none';
-          cat.classList.remove('is-hidden-item');
-          return;
-        }
-
-        cat.classList.toggle('is-hidden-item', catIsHidden);
-
-        const catTitle = cat.querySelector('.docs-category-title').textContent.toLowerCase();
-        const catTitleMatch = q ? catTitle.includes(q) : false;
-        const cards = cat.querySelectorAll('.file-card-wrap');
-        let shownCount = 0;
-
-        cards.forEach(card => {
-          const cardIsHidden = card.dataset.visible === 'false';
-          const fileBtn = card.querySelector('.file-btn');
-
-          if (cardIsHidden && !showHidden) {
-            card.style.display = 'none';
-            fileBtn.classList.remove('is-hidden-item');
-            return;
-          }
-
-          fileBtn.classList.toggle('is-hidden-item', cardIsHidden);
-          const matches = !q || catTitleMatch || card.dataset.name.includes(q) || card.dataset.type.includes(q);
-          card.style.display = matches ? '' : 'none';
-          if (matches) shownCount++;
+    function buildTabs(categories) {
+      visibleCategories = categories.filter(c => c.visible !== false || showHidden);
+      const tabs = document.getElementById('category-tabs');
+      tabs.innerHTML = visibleCategories
+        .map(c => `<button class="category-tab" type="button" data-id="${c.id}">${c.name}</button>`)
+        .join('');
+      tabs.querySelectorAll('.category-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = visibleCategories.find(c => c.id === btn.dataset.id);
+          if (!cat) return;
+          // Clicking the already-selected pill deselects it and shows all.
+          selectCategory(activeCatId === cat.id ? null : cat);
         });
+      });
+      return visibleCategories;
+    }
 
-        const hasSubcats = cat.querySelector('.docs-subcategory') !== null;
-        const showCat = shownCount > 0 || hasSubcats || catTitleMatch || (!q && (!catIsHidden || showHidden));
-        cat.style.display = showCat ? '' : 'none';
+    // --- Search (filters cards within the active category) ---
 
-        if (showCat) {
-          if (q) cat.setAttribute('open', '');
-          anyVisible = true;
-        }
+    function applySearch() {
+      const q = (document.getElementById('search')?.value || '').trim().toLowerCase();
+      const host = document.getElementById('sections');
+      let any = false;
+
+      host.querySelectorAll('.cat-section').forEach(section => {
+        let shown = 0;
+        section.querySelectorAll('.media-card-wrap').forEach(card => {
+          const match = !q || card.dataset.name.includes(q) || card.dataset.type.includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) shown++;
+        });
+        section.style.display = shown ? '' : 'none';
+        if (shown) any = true;
       });
 
-      document.getElementById('no-results').classList.toggle('is-hidden', anyVisible || !q);
+      document.getElementById('no-results').classList.toggle('is-hidden', any || !q);
+      carouselUpdaters.forEach(fn => fn());
     }
 
-    document.getElementById('search').addEventListener('input', applyFilters);
+    document.getElementById('search').addEventListener('input', applySearch);
+
+    // --- Copy-link handling (inline feedback; suppress core.js's toast) ---
 
     document.addEventListener('click', function (e) {
       const btn = e.target.closest('[data-copy]');
       if (!btn) return;
-      // Stop the click from toggling a parent <details> when button is inside
-      // <summary>, and stop core.js's global [data-copy] handler from also
-      // firing (it would show a redundant toast on top of our inline feedback).
+      e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
       navigator.clipboard.writeText(btn.dataset.copy).then(() => {
-        btn.textContent = 'Copied!';
         btn.classList.add('is-copied');
-        setTimeout(() => {
-          btn.textContent = 'Copy link';
+        btn.innerHTML = CHECK_ICON;
+        clearTimeout(btn._copyTimer);
+        btn._copyTimer = setTimeout(() => {
           btn.classList.remove('is-copied');
-        }, 2000);
+          btn.innerHTML = COPY_ICON;
+        }, 1600);
       });
     });
+
+    // --- Sticky offset: keep the pill bar below the (async-rendered) header ---
+
+    function setHeaderHeight() {
+      const h = document.querySelector('.site-header')?.offsetHeight || 56;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+    window.addEventListener('resize', () => {
+      setHeaderHeight();
+      carouselUpdaters.forEach(fn => fn());
+    });
+    window.addEventListener('load', setHeaderHeight);
+    setTimeout(setHeaderHeight, 400);
 
     // --- Boot ---
 
     fetch('/files.json')
       .then(r => r.json())
       .then(data => {
-        const segments = getPathSegments();
-        const route = resolveRoute(data, segments);
-
+        const route = resolveRoute(data, getPathSegments());
         document.body.style.opacity = '1';
 
-        if (!route) {
-          document.getElementById('categories-container').innerHTML =
-            '<p style="color:var(--text-muted)">Page not found.</p>';
-          return;
-        }
-
-        if (route.type === 'file') {
+        if (route && route.type === 'file') {
           window.location.replace(route.file.href);
           return;
         }
 
-        if (route.type === 'home') {
-          renderHomePage(data);
-        } else {
-          renderSubpage(route.node, route.breadcrumb);
+        const visible = buildTabs(data.categories);
+        if (!visible.length) return;
+
+        // Default: show all categories. A deep link selects its category.
+        let initial = null;
+        if (route && route.type === 'page' && route.breadcrumb.length) {
+          const topId = route.breadcrumb[0].node.id;
+          initial = visible.find(c => c.id === topId) || null;
         }
+        selectCategory(initial);
+        setHeaderHeight();
       })
       .catch(() => {
         document.body.style.opacity = '1';
-        document.getElementById('categories-container').innerHTML =
-          '<p style="color:var(--text-muted)">Could not load files.json.</p>';
+        document.getElementById('sections').innerHTML =
+          '<p style="color:var(--text-muted);text-align:center;padding:48px 0">Could not load files.json.</p>';
       });
   </script>
 </body>
